@@ -32,7 +32,7 @@ def fileToJson (fileName: str):
     dict1 = {} 
     
     # fields in the sample file  
-    fields =['intNum','doubleNum'] 
+    fields =['firstNum','secondNum'] 
     
     with open(filename) as fh: 
         
@@ -54,11 +54,11 @@ def fileToJson (fileName: str):
         
             while i<len(fields): 
                 
-                    # creating dictionary for each employee 
+                    # creating dictionary for each string
                     dict2[fields[i]]= description[i] 
                     i = i + 1
                     
-            # appending the record of each employee to 
+            # appending the record of each string to 
             # the main dictionary 
             dict1[sno]= dict2 
             l = l + 1
@@ -79,7 +79,7 @@ def readingJsonFile (fileName:str):
         print("Done reading json file")
         return fileToRead
 #makingFile(5,'test.txt')
-#fileToJson('test.txt')
+fileToJson('test.txt')
 dictFromJson  = readingJsonFile('test2.json')
 #testing dump
 print(dictFromJson['strNum1'])
