@@ -1,0 +1,6 @@
+ {   "_comment": "this is a schema for INTEGER and DOUBLE", 
+     "properties" : {
+        "firstParam" : {"type" : "integer"},
+        "secondParam" : {"type" : "number", "multipleOf": 0.01}
+   }
+ }

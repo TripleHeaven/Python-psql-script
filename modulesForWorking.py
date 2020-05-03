@@ -32,14 +32,18 @@ def writeFileToAList(fileName :str):
                 middleDict = dict()
                 while i<len(fields): 
                         # creating dictionary for each line
-                        try:
+                
                             # this moment needs to be continued
-                            middleDict[fields[i]]= int(description[i])
-                        except:
-                            print ('wtf')
+                            # so first there is a number , if not then we write it as a str type
+                            # and if something happens json validate will check it
+                        try:
+                            middleDict[fields[i]]= float(description[i])
+                        except ValueError:
+                            middleDict[fields[i]]= str(description[i])
+                        
                         i = i + 1
                         
-                # appending the record of each employee to 
+                # appending the record of each line to 
                 # the main dictionary 
                 outputDict[sno]= middleDict 
                 l = l + 1
