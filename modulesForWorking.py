@@ -1,5 +1,6 @@
 import random
 import json 
+import pandas as pd
 def makingFile(stringsCount : int, fileName : str):
     '''
     1. how much strings generaate
@@ -9,23 +10,32 @@ def makingFile(stringsCount : int, fileName : str):
     for i in range (stringsCount):
             file.write(str(random.randint(1,100))+' '+str(round(random.uniform(1.1,99.9),2)) + "\n")
     file.close()
+def writeFileToAListFromCsv (fileName:str):
+    data = pd.read_csv(fileName, error_bad_lines=False)
+    print (data)
 def writeFileToAList(fileName :str):
     outputDict = dict()
     # intermediate and resultant dictionaries 
     # dict for middle 
     middleDict = {} 
     # resultant dict
-    outputDict  = {} 
-    # fields in the sample file  
-    fields =['firstParam','secondParam'] 
+    outputDict  = {}  
     with open(fileName) as fh: 
+            for line in fh:   
+                argsQuantity = len (list( line.split()))            
+    fields = list()
+    for i in range (argsQuantity):
+         fields.append(str(i+1))
+    with open(fileName) as fh: 
+            # line number 
+            lineNumber = 1
             # loop variable 
             i = 0 
             # count variable for dict
             l = 1          
             for line in fh:               
                 # reading line by line from the text file 
-                description= list( line.strip().split(None, 2))                
+                description= list( line.strip().split(None, argsQuantity))                
                 # for automatic creation of id for line
                 sno ='line'+str(l) 
                 i = 0 
@@ -40,6 +50,11 @@ def writeFileToAList(fileName :str):
                             middleDict[fields[i]]= float(description[i])
                         except ValueError:
                             middleDict[fields[i]]= str(description[i])
+
+                        except IndexError:
+                            print ('One of the arguments is missing! In Line ',lineNumber)
+                            raise SystemExit
+                        
                         
                         i = i + 1
                         
@@ -47,6 +62,7 @@ def writeFileToAList(fileName :str):
                 # the main dictionary 
                 outputDict[sno]= middleDict 
                 l = l + 1
+                lineNumber +=1
     return outputDict
 #reading a json file into a dictionary for validation check
 def readingJsonFile (fileName:str):

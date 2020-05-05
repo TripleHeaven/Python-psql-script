@@ -1,6 +1,6 @@
 {   "_comment": "this is a schema for double and float", 
     "properties" : {
-       "firstParam" : {"type" : "number", "multipleOf":0.01},
-       "secondParam" : {"type" : "number"}
+       "1" : {"type" : "number", "multipleOf":0.01},
+       "2" : {"type" : "number"}
   }
 }
