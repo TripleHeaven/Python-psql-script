@@ -25,11 +25,18 @@ commentLines = 2
 forValidate = mfw.writeFileToAList(writtenFile, commentLines , 1)
 # validation Cycle
 
+# parsing a txt file
+#######
 with open(schemaJson) as f:
   schema = json.load(f)
 for key in forValidate:  
     validate(instance=forValidate[key], schema=schema)
 print (forValidate)
+#######
+
+# parsing the csv file
+print (mfw.writeFileToAListFromCsv('./files/run2_log.csv'))
+
 
 #checking = mfw.readingJsonFile("./schemes/schemaReal1.json")
 #properties = checking['properties']

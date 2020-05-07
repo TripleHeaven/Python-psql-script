@@ -1,6 +1,7 @@
 import random
 import json 
 import pandas as pd
+import csv
 def makingFile(stringsCount : int, fileName : str):
     '''
     1. how much strings generaate
@@ -11,8 +12,16 @@ def makingFile(stringsCount : int, fileName : str):
             file.write(str(random.randint(1,100))+' '+str(round(random.uniform(1.1,99.9),2)) + "\n")
     file.close()
 def writeFileToAListFromCsv (fileName:str):
-    data = pd.read_csv(fileName, error_bad_lines=False)
+    data = pd.read_csv(fileName)
+    #data = pd.read_csv(fileName, header=None, dtype={0: str}).set_index(0).squeeze().to_dict()
     print (data)
+    
+    
+
+
+
+
+
 def writeFileToAList(fileName :str, commentLines : int, strictMode : bool):
     outputDict = dict()
     # intermediate and resultant dictionaries 
