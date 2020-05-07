@@ -13,56 +13,70 @@ def makingFile(stringsCount : int, fileName : str):
 def writeFileToAListFromCsv (fileName:str):
     data = pd.read_csv(fileName, error_bad_lines=False)
     print (data)
-def writeFileToAList(fileName :str):
+def writeFileToAList(fileName :str, commentLines : int, strictMode : bool):
     outputDict = dict()
     # intermediate and resultant dictionaries 
     # dict for middle 
     middleDict = {} 
     # resultant dict
     outputDict  = {}  
+
+    forLines = commentLines
+    
     with open(fileName) as fh: 
             for line in fh:   
-                argsQuantity = len (list( line.split()))            
+                if (forLines >0):
+                    argsQuantity = 0
+                    forLines -=1
+                else:
+                    argsQuantity = len (list( line.split()))            
     fields = list()
+    forLines = commentLines
     for i in range (argsQuantity):
          fields.append(str(i+1))
-    with open(fileName) as fh: 
+    with open(fileName) as fh:
             # line number 
             lineNumber = 1
             # loop variable 
             i = 0 
             # count variable for dict
             l = 1          
-            for line in fh:               
-                # reading line by line from the text file 
-                description= list( line.strip().split(None, argsQuantity))                
-                # for automatic creation of id for line
-                sno ='line'+str(l) 
-                i = 0 
-                middleDict = dict()
-                while i<len(fields): 
-                        # creating dictionary for each line
-                
-                            # this moment needs to be continued
-                            # so first there is a number , if not then we write it as a str type
-                            # and if something happens json validate will check it
-                        try:
-                            middleDict[fields[i]]= float(description[i])
-                        except ValueError:
-                            middleDict[fields[i]]= str(description[i])
-
-                        except IndexError:
-                            print ('One of the arguments is missing! In Line ',lineNumber)
-                            raise SystemExit
+            for line in fh:  
+                if (forLines > 0 ): 
+                    m = 0 
+                    forLines -=1
+                    lineNumber +=1
+                else:             
+                        # reading line by line from the text file 
+                        description= list( line.strip().split(None, argsQuantity))                
+                        # for automatic creation of id for line
+                        sno ='line'+str(l) 
+                        i = 0 
+                        middleDict = dict()
+                        while i<len(fields): 
+                                # creating dictionary for each line
                         
-                        
-                        i = i + 1
-                        
-                # appending the record of each line to 
-                # the main dictionary 
-                outputDict[sno]= middleDict 
-                l = l + 1
-                lineNumber +=1
+                                    # this moment needs to be continued
+                                    # so first there is a number , if not then we write it as a str type
+                                    # and if something happens json validate will check it
+                                try:
+                                    middleDict[fields[i]]= float(description[i])
+                                except ValueError:
+                                    middleDict[fields[i]]= str(description[i])
+                                except IndexError:
+                                    
+                                    print ('One of the arguments is missing! In Line ',lineNumber)
+                                    if (strictMode==1):
+                                        raise SystemExit
+                                
+                                
+                                i = i + 1
+                                
+                        # appending the record of each line to 
+                        # the main dictionary 
+                        outputDict[sno]= middleDict 
+                        l = l + 1
+                        lineNumber +=1
     return outputDict
 #reading a json file into a dictionary for validation check
 def readingJsonFile (fileName:str):
