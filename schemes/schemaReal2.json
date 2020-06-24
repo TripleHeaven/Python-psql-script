@@ -1,0 +1,10 @@
+{   "_comment": "this is a schema for summary.txt", 
+    "properties" : {
+       "1" : {"type" : "integer"},
+       "2" : {"type" : "string"},
+       "3" : {"type" : "string"},
+       "4" : {"type" : "integer"},
+       "5" : {"type" : "number", "multipleOf":0.001},
+       "6" : {"type" : "string"}
+  }
+}
