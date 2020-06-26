@@ -1,6 +1,19 @@
-{   "_comment": "this is a schema for double and float", 
-    "properties" : {
-       "1" : {"type" : "number", "multipleOf":0.01},
-       "2" : {"type" : "number"}
+{
+  "properties": {
+    "1": {
+      "type": "number"
+    },
+    "2": {
+      "type": "number",
+      "oneOf": [
+        {
+          "multipleOf": 0.01
+        },
+        {
+          "exclusiveMinimum": 1.11,
+          "exclusiveMaximum": 1.19
+        }
+      ]
+    }
   }
 }

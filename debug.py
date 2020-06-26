@@ -31,16 +31,23 @@ schemaJson = './schemes/schemaReal2.json'
 # getting data from a csv file
 
 #forValidate = mfw.writeFileToAListFromCsv('./files/run2_log.csv')
-forValidate = mfw.writeFileToAListBeta('./files/run2_log.csv',1, ';')
+
+
+
+#forValidate = mfw.writeFileToAListBeta('./files/run2_log.csv',0,';','./schemes/schemaReal2.json')
+'''
+forValidate = mfw.writeFileToAList('./files/run2_log.csvCONVERTED',0,';',"./schemes/schemaReal2.json",';')
 # parsing a txt file
 #######
 with open(schemaJson) as f:
   schema = json.load(f)
+  print (schema)
 for key in forValidate:  
     validate(instance=forValidate[key], schema=schema)
-print (forValidate)
+#print (forValidate)
 print ("File Succesfully readed!")
 #######
+'''
 
 # parsing the csv file
 #print (mfw.writeFileToAListFromCsv('./files/run2_log.csv'))
@@ -51,3 +58,14 @@ print ("File Succesfully readed!")
 
 #print (properties)
 # print (mfw.readingJsonFile("./schemes/schemaReal1.json")["properties"]["1"]["type"])
+
+
+
+forV1 = mfw.writeFileToAListBeta('./files/run2_log.csv',1,';','./schemes/schemaReal2.json')
+with open(schemaJson) as f:
+  schema = json.load(f)
+  print (schema)
+for key in forV1:  
+    validate(instance=forV1[key], schema=schema)
+#print (forValidate)
+print ("File Succesfully readed!")
