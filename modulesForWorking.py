@@ -330,10 +330,10 @@ def doubleChecker (schema):
         i += 1
 def doubleValidator (num ):
     a = ((float(num) * 100) % 1)
-    t = a < 0
-    test = 1
-    if (a):
-        return num
+    t = a < 0.00000015
+    test = float (num)
+    if (t):
+        return float(num)
     else:
         raise Exception('Validation Error')
 def convertingSchema(schemaJson):

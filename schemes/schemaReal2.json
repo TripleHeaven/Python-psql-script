@@ -16,7 +16,7 @@
       "type": "double"
     },
     "6": {
-      "type": "fileSize"
+      "type": "string"
     }
   }
 }
