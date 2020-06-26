@@ -1,4 +1,10 @@
 {
+  "separator": {
+    "sep": ";"
+  },
+  "commentLines": {
+    "quant": 1
+  },
   "properties": {
     "1": {
       "type": "integer"
@@ -13,7 +19,7 @@
       "type": "integer"
     },
     "5": {
-      "type": "double"
+      "type": "number"
     },
     "6": {
       "type": "string"

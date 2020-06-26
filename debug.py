@@ -3,7 +3,9 @@ import modulesForWorking as mfw
 import json
 import sys
 
-
+#fileToParse = './files/run2_log.csv'
+#typeFile = fileToParse[-3:]
+#print (type(fileToParse))
 
 
 # Get information from user
@@ -61,7 +63,7 @@ print ("File Succesfully readed!")
 
 
 
-forV1 = mfw.writeFileToAListBeta('./files/run2_log.csv',1,';','./schemes/schemaReal2.json')
+forV1 = mfw.writeFileToAList('./files/run2_log.csvCONVERTED',1,1,'./schemes/schemaReal2.json',';')
 with open(schemaJson) as f:
   schema = json.load(f)
   print (schema)

@@ -4,44 +4,45 @@ import json
 import sys
 
 
+# for debug 
+
+fileName = sys.argv[1]
+fileType = fileName [-3:]
+schemaAdress = sys.argv[2]
+
+# typeFile 
+'''
+fileType = fileName[-3:]
+schemaAdress = sys.argv[2]
+
+#Info from user
 
 
-# Get information from user
-writtenFile = sys.argv[1]
-schemaJson = sys.argv[2]
-commentLines = int(sys.argv[3])
-#strictMode = sys.argv[3]
-#commentLines = sys.argv[4]
-# writing a file into json to validate check
-#writeToJson("test.txt","test2.json", 2)
-#dictar = readingJsonFile('test2.json')
+fileName = sys.argv[1]
+
+# typeFile 
+
+fileType = fileName[-3:]
+schemaAdress = sys.argv[2]
+
+'''
+with open(schemaAdress) as f:
+  schema = json.load(f)
+  sepa = schema['separator']['sep']
+  commentLines = schema['commentLines']['quant']
+
+if (fileType == "txt"):
+  forValidate = mfw.writeFileToAList(fileName,commentLines,1,schemaAdress,sepa)
+elif (fileType == "csv"):
+  forValidate = mfw.writeFileToAListBeta(fileName,commentLines,sepa,schemaAdress)
 
 
-#forDebug
-#writtenFile = './files/test.txt'
-#schemaJson = './schemes/schema1.json'
-
-
-# getting data from a text file
-forValidate = mfw.writeFileToAList(writtenFile, commentLines , 1)
-# validation Cycle
 
 # parsing a txt file
 #######
-with open(schemaJson) as f:
+with open(schemaAdress) as f:
   schema = json.load(f)
 for key in forValidate:  
     validate(instance=forValidate[key], schema=schema)
 print (forValidate)
 print ("File Succesfully readed!")
-#######
-
-# parsing the csv file
-#print (mfw.writeFileToAListFromCsv('./files/run2_log.csv'))
-
-
-#checking = mfw.readingJsonFile("./schemes/schemaReal1.json")
-#properties = checking['properties']
-
-#print (properties)
-# print (mfw.readingJsonFile("./schemes/schemaReal1.json")["properties"]["1"]["type"])
