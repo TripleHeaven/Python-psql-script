@@ -1,0 +1,39 @@
+
+Перед вами находится шаблон схемы описания данных для работы скриптка
+separator sep пользователь должен ввести, каким знаком разделены токены в файле
+commentLines quant пользователь должен ввести, сколько строк в файле не должны быть прочитаны скриптом
+properties вместо first и так далее пользователь вводит название столбца для записи в базу данных и в type указывается тип данных столбца
+Доступные типы
+string
+double
+float
+integer
+fileSize (с переводом в байты)
+{
+  "separator": {
+    "sep": ";"
+  },
+  "commentLines": {
+    "quant": 1
+  },
+  "properties": {
+    "first": {
+      "type": "integer"
+    },
+    "second": {
+      "type": "string"
+    },
+    "third": {
+      "type": "string"
+    },
+    "fourth": {
+      "type": "integer"
+    },
+    "fifth": {
+      "type": "double"
+    },
+    "sixth": {
+      "type": "string"
+    }
+  }
+}

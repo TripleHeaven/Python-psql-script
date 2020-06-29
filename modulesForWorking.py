@@ -32,9 +32,10 @@ def writeFileToAList(fileName :str, commentLines : int, strictMode : bool, schem
     middleDict = {} 
     # resultant dict
     outputDict  = {}  
-
+    namesList = takingNames(schema)
     forLines = commentLines
     
+    # considering comment lines
     with open(fileName) as fh: 
             for line in fh:   
                 if (forLines >0):
@@ -47,7 +48,10 @@ def writeFileToAList(fileName :str, commentLines : int, strictMode : bool, schem
     fields = list()
     forLines = commentLines
     for i in range (argsQuantity):
-         fields.append(str(i+1))
+        if (len (namesList) > 0):
+            el = namesList[0]
+            namesList.remove(namesList[0])
+        fields.append(el)
     with open(fileName) as fh:
             # line number 
             lineNumber = 1
@@ -64,12 +68,15 @@ def writeFileToAList(fileName :str, commentLines : int, strictMode : bool, schem
                         # reading line by line from the text file 
                         description= list( line.strip().split(sepa, argsQuantity))                
                         # for automatic creation of id for line
-                        sno ='line'+str(l) 
+                        
                         i = 0 
                         middleDict = dict()
+                        sno ='line'+str(l) 
+                        
+                       
 
                         icheck = fileSizeChecker(schema)
-                        dcheck = fileSizeChecker(schema)
+                        dcheck = doubleChecker(schema)
                         while i<len(fields): 
                                 # creating dictionary for each line
                                     # this moment needs to be continued
@@ -79,7 +86,7 @@ def writeFileToAList(fileName :str, commentLines : int, strictMode : bool, schem
                                 if (icheck and icheck == i):
                                     middleDict[fields[i]] = longToBytes(description[i])
                                 elif (dcheck and dcheck == i):
-                                    middleDict[fields[i]] = middleDict[fields[i]] = float(description[i].replace(' ','.'))
+                                    middleDict[fields[i]] = doubleValidator(description[i].replace(' ','.'))
                                 else:
                                     try:
                                         middleDict[fields[i]]= float(( description[i].replace(' ','.')))
@@ -167,6 +174,15 @@ def writeToJson(fileToWrite: str, fileWhichToWrite: str, elemsInLine: int):
     out_file = open(fileWhichToWrite, "w") 
     json.dump(dict1, out_file, indent = 2) 
     out_file.close() 
+def takingNames (schemaAdress ):
+    namesList = list ()
+    with open(schemaAdress) as f:
+        schema = json.load(f)
+        schemaThing = schema["properties"]
+        for key in schemaThing:
+            namesList.append(key)
+    return namesList        
+
 def writeFileToAListBeta (inputfile:str, commentLines : int, sepa , schema): 
     fileName = csvToTxt(inputfile)
     outputDict = dict()
@@ -175,9 +191,10 @@ def writeFileToAListBeta (inputfile:str, commentLines : int, sepa , schema):
     middleDict = {} 
     # resultant dict
     outputDict  = {}  
-
+    namesList = takingNames(schema)
     forLines = commentLines
-    
+        # considering comment lines
+
     with open(fileName) as fh: 
             for line in fh:   
                 if (forLines >0):
@@ -188,7 +205,9 @@ def writeFileToAListBeta (inputfile:str, commentLines : int, sepa , schema):
     fields = list()
     forLines = commentLines
     for i in range (argsQuantity):
-         fields.append(str(i+1))
+        el = namesList[0]
+        namesList.remove(namesList[0])
+        fields.append(el)
     with open(fileName) as fh:
             # line number 
             lineNumber = 1
@@ -208,7 +227,7 @@ def writeFileToAListBeta (inputfile:str, commentLines : int, sepa , schema):
                         sno ='line'+str(l) 
                         i = 0 
                         middleDict = dict()
-
+                        
                         icheck = fileSizeChecker(schema)
                         dcheck = doubleChecker(schema)
                         while i<len(fields): 
@@ -329,10 +348,11 @@ def doubleChecker (schema):
             return i
         i += 1
 def doubleValidator (num ):
-    a = ((float(num) * 100) % 1)
-    t = a < 0.00000015
-    test = float (num)
-    if (t):
+    #a = ((float(num) * 100) % 1)
+    c = float (num)
+    a = str(c).replace(',','.')
+    l = a.split('.')
+    if (len (l[1])<3):
         return float(num)
     else:
         raise Exception('Validation Error')
