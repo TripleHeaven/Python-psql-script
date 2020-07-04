@@ -9,6 +9,9 @@ double
 float
 integer
 fileSize (с переводом в байты)
+
+В разделе databaseinfo содержится информация о базе данных для записи.
+ДБ должна быть создана и содержать столбцы.
 {
   "separator": {
     "sep": ";"
@@ -35,5 +38,12 @@ fileSize (с переводом в байты)
     "sixth": {
       "type": "string"
     }
+  },
+  "databaseinfo": {
+    "database": "TestTable1",
+    "user": "postgres",
+    "password": "123",
+    "host": "127.0.0.1",
+    "port": "5432"
   }
 }
