@@ -2,6 +2,8 @@ import random
 import json 
 import pandas as pd
 import csv
+import psycopg2
+
 def csvToTxt(input):
     csv_file = input
     txt_file = input+ 'CONVERTED'
@@ -306,27 +308,27 @@ def longToBytes(baseString : str):
     returnedNumber = float(0)
     if (len (sizeString) == 0):
         returnedNumber = float(numberString)
-        returnedValue = str(returnedNumber) + "B"
+        returnedValue = str(returnedNumber) # + "B"
         return returnedValue
     elif (sizeString=="K"):
         returnedNumber = float(numberString) * 1024
-        returnedValue = str(returnedNumber) + "B"
+        returnedValue = str(returnedNumber) # + "B"
         return returnedValue
     elif (sizeString=="M"):
         returnedNumber = float(numberString) * 1024 * 1024
-        returnedValue = str(returnedNumber)+ "B"
+        returnedValue = str(returnedNumber) #+ "B"
         return returnedValue
     elif (sizeString=="G"):
         returnedNumber = float(numberString) * 1024 * 1024 * 1024
-        returnedValue = str(returnedNumber)+ "B"
+        returnedValue = str(returnedNumber) # +  "B"
         return returnedValue
     elif (sizeString=="T"):
         returnedNumber = float(numberString) * 1024 * 1024 * 1024 * 1024
-        returnedValue = str(returnedNumber)+ "B"
+        returnedValue = str(returnedNumber) #+ "B"
         return returnedValue
     elif (sizeString=="P"):
         returnedNumber = float(numberString) * 1024 * 1024 * 1024  * 1024 * 1024
-        returnedValue = str(returnedNumber)+ "B"
+        returnedValue = str(returnedNumber) #+ "B"
         return returnedValue
 
 def fileSizeChecker(schema):
@@ -371,3 +373,65 @@ def convertingSchema(schemaJson):
         out_file = open(schemaJson, "w") 
         json.dump(schema, out_file, indent = 2) 
         out_file.close() 
+def writeIntoDataBase (schemaJson,dicForWriting):
+    
+    
+    with open(schemaJson) as f:
+        schema = json.load(f)
+        dbInfo = schema["databaseinfo"]
+        database = dbInfo["database"]
+        user = dbInfo["user"]
+        password = dbInfo["password"]
+        host = dbInfo["host"]
+        port = dbInfo["port"]
+        lc = schema["properties"]
+        listOfColumns = list()
+        for key in lc:
+            listOfColumns.append(key)
+        f.close()
+    for key in dicForWriting:
+        print (dicForWriting[key])
+        
+    tplL = tuple(listOfColumns)
+    tableNames = str()
+    for i in range (len(listOfColumns)):
+        if (i != len(listOfColumns) -1 ):
+            tableNames+=" " + str(listOfColumns[i])+","
+        else:
+            tableNames+=" " + str(listOfColumns[i])
+
+    
+    conn = psycopg2.connect(
+    database = database,
+    user = user,
+    password = password,
+    host = host,
+    port = port
+)
+    cur = conn.cursor()
+    for key in dicForWriting:
+        valuesStr = str()
+        checker = dicForWriting[key]
+        l = 0
+        valuesList = list()
+        for key2 in checker:
+            if (type (checker[key2]) == str):
+                valueCurrent = "'" + str(checker[key2]) + "'"
+                valuesList.append(valueCurrent)
+            else:
+                valuesList.append(checker[key2])
+        for key1 in checker:
+            if (l == 0):
+                valuesStr += str(valuesList[l])
+            else:
+                valuesStr += ", " + str(valuesList[l])
+            l+=1
+        #print (valuesList)
+        sqlInsert= str()
+        sqlInsert = 'INSERT INTO '  + database + ' (' + tableNames +  ' ) ' +  "VALUES " ' ( '  + valuesStr +  ' );'
+        cur.execute(sqlInsert) 
+    conn.commit()
+    conn.close() 
+
+        
+        

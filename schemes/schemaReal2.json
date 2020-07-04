@@ -6,23 +6,30 @@
     "quant": 1
   },
   "properties": {
-    "first": {
+    "filenumber": {
       "type": "integer"
     },
-    "second": {
+    "beam": {
       "type": "string"
     },
-    "third": {
+    "target": {
       "type": "string"
     },
-    "fourth": {
+    "fieldcurrent": {
       "type": "integer"
     },
-    "fifth": {
-      "type": "double"
+    "fieldfactor": {
+      "type": "number"
     },
-    "sixth": {
+    "filesize": {
       "type": "string"
     }
+  },
+  "databaseinfo": {
+    "database": "TestTable1",
+    "user": "postgres",
+    "password": "123",
+    "host": "127.0.0.1",
+    "port": "5432"
   }
 }

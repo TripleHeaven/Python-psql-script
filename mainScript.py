@@ -23,3 +23,5 @@ for key in forValidate:
     validate(instance=forValidate[key], schema=schema)
 print (forValidate)
 print ("File Succesfully readed!")
+
+ 

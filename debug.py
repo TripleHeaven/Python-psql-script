@@ -61,6 +61,8 @@ print ("File Succesfully readed!")
 #print (properties)
 # print (mfw.readingJsonFile("./schemes/schemaReal1.json")["properties"]["1"]["type"])
 
+
+'''
 schemaAdress = './schemes/schemaReal2.json'
 with open(schemaAdress) as f:
   schema = json.load(f)
@@ -78,10 +80,14 @@ a = namesList.remove(namesList[0])
 print (namesList)
 print (a)
 
-
-forValidate = mfw.writeFileToAList('./files/run2_log.csvCONVERTED',1,';',"./schemes/schemaReal2.json",';')
+'''
+#forValidate = mfw.writeFileToAList('./files/run2_log.csvCONVERTED',1,';',"./schemes/schemaReal2.json",';')
 # parsing a txt file
-#forValidate = mfw.writeFileToAListBeta('./files/run2_log.csv',1,';','./schemes/schemaReal2.json')
+forValidate = mfw.writeFileToAListBeta('./files/run2_log.csv',1,';','./schemes/schemaReal2.json')
+
+
+
+
 
 with open(schemaJson) as f:
   schema = json.load(f)
@@ -92,3 +98,5 @@ for key in forValidate:
 print ("File Succesfully readed!")
 
 
+
+mfw.writeIntoDataBase(schemaJson,forValidate)
